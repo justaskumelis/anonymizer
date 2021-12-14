@@ -4,7 +4,7 @@ import numpy as np
 import scipy.stats as st
 import tensorflow.compat.v1 as tf
 
-tf.compat.v1.disable_eager_execution()
+# tf.compat.v1.disable_eager_execution()
 
 from anonymizer.obfuscation.helpers import kernel_initializer, bilinear_filter, get_default_session_config
 
