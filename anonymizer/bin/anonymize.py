@@ -33,12 +33,12 @@ def parse_args():
                         metavar='/path/to/output_foler',
                         help='Path to the folder the anonymized images should be written to. '
                              'Will mirror the folder structure of the input folder.')
-    parser.add_argument('--weights', required=True,
+    parser.add_argument('--weights', required=False, default='./weights',
                         metavar='/path/to/weights_foler',
                         help='Path to the folder where the weights are stored. If no weights with the '
                              'appropriate names are found they will be downloaded automatically.')
-    parser.add_argument('--image-extensions', required=False, default='jpg,png',
-                        metavar='"jpg,png"',
+    parser.add_argument('--image-extensions', required=False, default='jpg,png,tif',
+                        metavar='"jpg,png,tif"',
                         help='Comma-separated list of file types that will be anonymized')
     parser.add_argument('--face-threshold', type=float, required=False, default=0.3,
                         metavar='0.3',
