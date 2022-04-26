@@ -64,7 +64,10 @@ class Anonymizer:
             output_detections_path = (Path(output_path) / relative_path).with_suffix('.json')
 
             # Anonymize image
-            image = load_np_image(str(input_image_path))
+            try:
+                image = load_np_image(str(input_image_path))
+            except:
+                print("\n!!! Bad file: ",str(input_image_path))
             anonymized_image, detections = self.anonymize_image(image=image, detection_thresholds=detection_thresholds)
             save_np_image(image=anonymized_image, image_path=str(output_image_path))
             if write_json:
