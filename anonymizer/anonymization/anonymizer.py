@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm
 
+import pyexiv2
 
 def load_np_image(image_path):
     image = Image.open(image_path).convert('RGB')
@@ -68,7 +69,11 @@ class Anonymizer:
                 image = load_np_image(str(input_image_path))
             except:
                 print("\n!!! Bad file: ",str(input_image_path))
+            #read EXIF data from odirinal file
+            exif = pyexiv2.Image(str(input_image_path)).read_exif()
             anonymized_image, detections = self.anonymize_image(image=image, detection_thresholds=detection_thresholds)
             save_np_image(image=anonymized_image, image_path=str(output_image_path))
+            #Add EXIF data from original file
+            pyexiv2.Image(str(output_image_path)).modify_exif(exif)
             if write_json:
                 save_detections(detections=detections, detections_path=str(output_detections_path))
