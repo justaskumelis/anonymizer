@@ -70,10 +70,16 @@ class Anonymizer:
             except:
                 print("\n!!! Bad file: ",str(input_image_path))
             #read EXIF data from odirinal file
-            exif = pyexiv2.Image(str(input_image_path)).read_exif()
+            try:
+                exif = pyexiv2.Image(str(input_image_path)).read_exif()
+            except:
+                print("\n!!! EXIF read fail: ",str(input_image_path))
             anonymized_image, detections = self.anonymize_image(image=image, detection_thresholds=detection_thresholds)
             save_np_image(image=anonymized_image, image_path=str(output_image_path))
             #Add EXIF data from original file
-            pyexiv2.Image(str(output_image_path)).modify_exif(exif)
+            try:
+                pyexiv2.Image(str(output_image_path)).modify_exif(exif)
+            except:
+                print("\n!!! EXIF write fail: ",str(output_image_path))
             if write_json:
                 save_detections(detections=detections, detections_path=str(output_detections_path))
